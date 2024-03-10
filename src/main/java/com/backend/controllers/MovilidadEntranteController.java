@@ -36,4 +36,21 @@ public class MovilidadEntranteController {
         MovilidadEntrante movilidadNew = service.save(movilidadEntrante);
         return ResponseEntity.status(HttpStatus.CREATED).body(movilidadNew);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MovilidadEntrante> update(@PathVariable Long id, @RequestBody MovilidadEntrante movilidadEntrante){
+        movilidadEntrante.setIdEmpleados(id);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.save(movilidadEntrante));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+        MovilidadEntrante movilidadEntrante = new MovilidadEntrante();
+        movilidadEntrante.setIdEmpleados(id);
+        Optional<MovilidadEntrante> movilidadEntranteOptional = service.delete(movilidadEntrante);
+        if(movilidadEntranteOptional.isPresent()){
+            return ResponseEntity.ok(movilidadEntranteOptional.orElseThrow());
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
